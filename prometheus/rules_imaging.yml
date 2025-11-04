@@ -295,7 +295,7 @@ groups:
     - alert: TargetSchedulerStuck
       expr: (
               device:telescope:is_connected * on(host)
-              nina_status{item=~".*TargetAreaContainer"} * on(host)
+              nina_status{item=~".*TargetSchedulerContainer"} * on(host)
               nina_status{item="TakeExposure",category="Scheduler"}
             ) == bool 0 > 0
             AND on()
