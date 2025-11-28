@@ -14,13 +14,13 @@ groups:
     - record: imaging:wait:altitude
       expr: sum without(item) (nina_status{category!~".*Instruction Set.*",item=~"WaitFor.*Altitude"})>0
     - record: imaging:input:message
-      expr: nina_status{category!~".*Instruction Set.*",category="Utility",item=~"MessageBox.*"}>0
+      expr: nina_status{category!~".*Instruction Set.*",item=~"MessageBox.*"}>0
     - record: imaging:input:rotate
-      expr: nina_status{category!~".*Instruction Set.*",category="Telescope",item=~".*Rotate"}>0
+      expr: nina_status{category!~".*Instruction Set.*",item=~".*Rotate"}>0
     - record: imaging:input:polar_alignment
-      expr: nina_status{category!~".*Instruction Set.*",category="Polar Alignment",item="PolarAlignment"}>0
+      expr: nina_status{category!~".*Instruction Set.*",item="PolarAlignment"}>0
     - record: imaging:input:filter
-      expr: nina_status{category!~".*Instruction Set.*",category="Filter Wheel",item="SwitchFilter"}>0
+      expr: nina_status{category!~".*Instruction Set.*",item="SwitchFilter"}>0
     - record: imaging:error:plate_solve
       expr: max by(host,instance) (rate(nina_error_total{module=~"ASTAP.*"}[5m]))>0
 
@@ -213,7 +213,7 @@ groups:
 
     - alert: UnguidedImaging
       expr: (nina_status{category!~".*Instruction Set.*",item=~".*(TargetSchedulerContainer|DeepSkyObjectContainer)"} - on(host)
-              max by(host) (nina_status{category!~".*Instruction Set.*",category="Telescope",item=~"Center.*"}) - on(host)
+              max by(host) (nina_status{category!~".*Instruction Set.*",item=~"Center.*"}) - on(host)
               nina_status{category!~".*Instruction Set.*",item="MeridianFlip"}
             )
             * on(host)
@@ -226,7 +226,7 @@ groups:
 
     - alert: UnguidedImaging
       expr: (nina_status{category!~".*Instruction Set.*",item=~".*(TargetSchedulerContainer|DeepSkyObjectContainer)"} - on(host)
-              max by(host) (nina_status{category!~".*Instruction Set.*",category="Telescope",item=~"Center.*"}))
+              max by(host) (nina_status{category!~".*Instruction Set.*",item=~"Center.*"}))
             * on()
             absent(guiding:status:is_guiding) > 0
       for: 5m
